@@ -32,3 +32,11 @@ jobs:
         run: |
           cd backend
           python -m pytest Test/test.py -v
+
+      - name: Auggie Analysis on Test Failure
+        if: env.TESTS_FAILED == 'true'
+        uses: augmentcode/auggie-agent-action@v1
+        with:
+          session-auth: ${{ secrets.AUGMENT_SESSION_AUTH }}
+          instructions: |
+            Summarize the test failures for this PR and provide suggestions for fixing them.
